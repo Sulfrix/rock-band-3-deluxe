@@ -474,6 +474,7 @@
             (gems_default
                {set $dx_gem_needs_reset TRUE}
                {set $dx_gem {$current_list selected_sym}}
+               {set $dx_gem_rgb {has_substr $dx_gem "(rgb)"}}
                {dx_state dxState_TextureMenu}
             )
             (keyboard_lanes

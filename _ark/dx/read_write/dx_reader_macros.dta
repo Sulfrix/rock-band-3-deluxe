@@ -1325,6 +1325,11 @@
          {elem {find $entry gems} 1}
       }
    }
+   {if {== {elem $entry 0} {basename gems_rgb}}
+      {set $dx_gem_rgb
+         {elem {find $entry gems_rgb} 1}
+      }
+   }
    {if {== {elem $entry 0} {basename animated_gems}}
       {set $dx_animated_gem
          {elem {find $entry animated_gems} 1}

@@ -518,15 +518,116 @@
 
 {func dx_track_initialize_rgb ($trackdir)
    {set_this $trackdir}
-   
+
+   {dx_log_writer insane {sprint "Initializing RGB for " {$trackdir name}}}
+
+   {new Mat rgb_prism_bracket.mat}
+   {rgb_prism_bracket.mat copy prism_mat.mat kCopyShallow}
+   {rgb_prism_bracket.mat set diffuse_tex rgb_gem_brackets.tex}
+   {rgb_prism_bracket.mat set emissive_map rgb_gem_brackets_emissive.tex}
+   {rgb_prism_bracket.mat set z_mode kZModeTransparent}
+
+   {new Mat rgb_prism_bracket_hopo.mat}
+   {rgb_prism_bracket_hopo.mat copy prism_mat_hopo.mat kCopyShallow}
+   {rgb_prism_bracket_hopo.mat set diffuse_tex rgb_gem_brackets_hopo.tex}
+   {rgb_prism_bracket_hopo.mat set emissive_map rgb_gem_brackets_emissive_hopo.tex}
+   {rgb_prism_bracket_hopo.mat set z_mode kZModeTransparent}
+
+   {dx_log_writer insane "Created materials"}
+
+   {foreach $color (green red yellow blue orange style hopo_green hopo_red hopo_yellow hopo_blue hopo_orange hopo_style)
+      {dx_log_writer insane {sprint "Creating fill material for " $color}}
+      {set $matname {symbol {sprint "rgb_prism_fill_" $color ".mat"}}}
+      {set $ishopo {startswith $color "hopo_"}}
+      {new Mat $matname}
+      {dx_log_writer insane {sprint "About to copy some values"}}
+      {$matname copy {if_else $ishopo prism_mat_hopo.mat prism_mat.mat} kCopyShallow}
+      ;{$matname set next_pass {if_else $ishopo rgb_prism_bracket_hopo.mat rgb_prism_bracket.mat}}
+      ;{$matname set z_mode kZ}
+      ;{dx_log_writer insane {sprint "next pass -> " {{$matname get next_pass} name}}}
+      {if_else $ishopo 
+         {do
+            {$matname set diffuse_tex rgb_gem_fill_hopo.tex}
+            {$matname set emissive_map rgb_gem_fill_emissive_hopo.tex}
+         }
+         {do
+            {$matname set diffuse_tex rgb_gem_fill.tex}
+            {$matname set emissive_map rgb_gem_fill_emissive.tex}
+         }
+      }
+   }
+   {dx_log_writer insane "Done creating fill materials"}
+   {new Object rgb_handler
+      (set_slot_color ($slot $color)
+         {set_this {$this dir}}
+         {dx_log_writer insane {sprint "Setting color of slot " $slot " to " $color}}
+         {set $slots (
+            (green hopo_green)
+            (red hopo_red)
+            (yellow hopo_yellow)
+            (blue hopo_blue)
+            (orange hopo_orange)
+            (style hopo_style)
+         )}
+         {set $slotmats {elem $slots $slot}}
+         {foreach $mat $slotmats
+            {set $matname {symbol {sprint "rgb_prism_fill_" $mat ".mat"}}}
+            {dx_log_writer insane {sprint "Setting color of " $matname}}
+            {$matname set color $color}
+         }
+         ;{{gem_tail find {symbol {sprint "tail_" {elem (green red yellow blue orange white) $slot}}}} set color $color}
+      )
+   }
 }
 
-{func dx_track_enable_rgb_gems ($trackdir)
-   {set_this $trackdir}
-   {if_else {exists rgb_handler}
-      {do}
-      {do
+#define DX_WIDGET_MAPPINGS ((
+   (gem_green.wid green)
+   (gem_red.wid red)
+   (gem_yellow.wid yellow)
+   (gem_blue.wid blue)
+   (gem_orange.wid orange)
+   (star_gem.wid style)
+   (gem_green_hopo.wid hopo_green)
+   (gem_red_hopo.wid hopo_red)
+   (gem_yellow_hopo.wid hopo_yellow)
+   (gem_blue_hopo.wid hopo_blue)
+   (gem_orange_hopo.wid hopo_orange)
+   (star_hopo.wid hopo_style)
+))
 
-      }
+{func dx_trackwidget_rgb ($wid $mat $name)
+   {set $bracketmesh {symbol {sprint "rgb_prism_bracket_" $name ".mesh"}}}
+   {unless {exists $bracketmesh}
+      ;{new Mesh $bracketmesh}
+      ;{$bracketmesh copy {$wid get (meshes 0)} kCopyShallow}
+      ;{$bracketmesh set mat {if_else {startswith $name "hopo"} rgb_prism_bracket_hopo.mat rgb_prism_bracket.mat}}
+      ;{gem_pieces.grp add_object $bracketmesh}
+      ;{dx_log_writer insane {sprint "bracket mesh mat: " {$bracketmesh get mat}}}
+      {{$wid get (meshes 0)} set mat $mat}
+      ;{$wid remove (meshes 0)}
+      ;{$wid insert (meshes 0) $bracketmesh}
+      ;{$wid set max_meshes {+ 1 {$wid get max_meshes}}}
+   }
+   ;{$wid set mat rgb_prism_bracket.mat}
+   ;{$wid set mat ""}
+   {dx_log_writer insane {sprint {$wid get_array meshes}}}
+}
+
+{func dx_track_enable_rgb ($trackdir)
+   {set_this $trackdir}
+   {unless {exists rgb_handler}
+      {dx_track_initialize_rgb $trackdir}
+   }
+   {foreach $mapping DX_WIDGET_MAPPINGS
+      {dx_log_writer insane {sprint "Setting material for track widget " $mapping}}
+      {dx_trackwidget_set_mat {elem $mapping 0} rgb_prism_bracket.mat {elem $mapping 1}}
+      ;{dx_trackwidget_rgb {elem $mapping 0} {symbol {sprint "rgb_prism_fill_" {elem $mapping 1} ".mat"}} {elem $mapping 1}}
+   }
+}
+
+{func dx_track_disable_rgb ($trackdir)
+   {set_this $trackdir}
+   {foreach $mapping DX_WIDGET_MAPPINGS
+      {{$mapping elem 0} set mat kDataUnhandled}
    }
 }

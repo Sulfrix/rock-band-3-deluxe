@@ -228,6 +228,52 @@
             {dx_custom_texture_setter gems gems_emissive_hopo prism_gem_emissive_hopo.tex $dx_gem}
             #endif
             {dx_custom_texture_setter gems gems_emissive prism_gem_emissive.tex $dx_gem}
+            {set $iwanttologstuff TRUE}
+            {if $dx_gem_rgb
+               ; if you have a better way of finding track_shared lmk, not sure if it's just in global scope
+               {set $track_shared {square_smasher_bright.tex dir}}
+
+               {unless {exists rgb_gem_brackets.tex}
+                  {new Tex rgb_gem_brackets.tex}
+                  {rgb_gem_brackets.tex set_name "rgb_gem_brackets.tex" $track_shared}
+                  {new Tex rgb_gem_fill.tex}
+                  {rgb_gem_fill.tex set_name "rgb_gem_fill.tex" $track_shared}
+
+                  {new Tex rgb_gem_brackets_emissive.tex}
+                  {rgb_gem_brackets_emissive.tex set_name "rgb_gem_brackets_emissive.tex" $track_shared}
+                  {new Tex rgb_gem_fill_emissive.tex}
+                  {rgb_gem_fill_emissive.tex set_name "rgb_gem_fill_emissive.tex" $track_shared}
+
+                  {new Tex rgb_gem_brackets_hopo.tex}
+                  {rgb_gem_brackets_hopo.tex set_name "rgb_gem_brackets_hopo.tex" $track_shared}
+                  {new Tex rgb_gem_fill_hopo.tex}
+                  {rgb_gem_fill_hopo.tex set_name "rgb_gem_fill_hopo.tex" $track_shared}
+
+                  {new Tex rgb_gem_brackets_emissive_hopo.tex}
+                  {rgb_gem_brackets_emissive_hopo.tex set_name "rgb_gem_brackets_emissive_hopo.tex" $track_shared}
+                  {new Tex rgb_gem_fill_emissive_hopo.tex}
+                  {rgb_gem_fill_emissive_hopo.tex set_name "rgb_gem_fill_emissive_hopo.tex" $track_shared}
+               }
+               {dx_custom_texture_setter rgb "gems/default/brackets" rgb_gem_brackets.tex $dx_gem}
+               {dx_custom_texture_setter rgb "gems/default/fills" rgb_gem_fill.tex $dx_gem}
+               {dx_custom_texture_setter rgb "gems/emissive/brackets" rgb_gem_brackets_emissive.tex $dx_gem}
+               {dx_custom_texture_setter rgb "gems/emissive/fills" rgb_gem_fill_emissive.tex $dx_gem}
+               {dx_custom_texture_setter rgb "gems/hopo/brackets" rgb_gem_brackets_hopo.tex $dx_gem}
+               {dx_custom_texture_setter rgb "gems/hopo/fills" rgb_gem_fill_hopo.tex $dx_gem}
+               {dx_custom_texture_setter rgb "gems/emissive_hopo/brackets" rgb_gem_brackets_emissive_hopo.tex $dx_gem}
+               {dx_custom_texture_setter rgb "gems/emissive_hopo/fills" rgb_gem_fill_emissive_hopo.tex $dx_gem}
+
+               {$this iterate GemTrackDir $trackdir
+                  {dx_log_writer insane {sprint "Iterating " {$trackdir name}}}
+                  {dx_track_enable_rgb $trackdir}
+                  {{$trackdir find rgb_handler} set_slot_color 0 {pack_color 0.5 0 1}}
+                  {{$trackdir find rgb_handler} set_slot_color 1 {pack_color 0 1 1}}
+                  {{$trackdir find rgb_handler} set_slot_color 2 {pack_color 1 1 1}}
+                  {{$trackdir find rgb_handler} set_slot_color 3 {pack_color 0.75 1 0.5}}
+                  {{$trackdir find rgb_handler} set_slot_color 4 {pack_color 0.25 0.25 0.25}}
+                  {{$trackdir find rgb_handler} set_slot_color 5 {pack_color 1 0.5 1}}
+               }
+            }
             {dx_custom_texture_setter gems gems_emissive_dynamic prism_gem_emissive_dynamic.tex $dx_gem}
             {dx_custom_texture_setter gems gems_keys prism_gem_keyboard_style.tex $dx_gem}
             {dx_custom_texture_setter gems gems_cymbals gem_cymbal_diffuse.tex $dx_gem}
@@ -287,7 +333,10 @@
          }
 
          {if $dx_sustain_needs_reset
-            {dx_custom_texture_setter FALSE sustains gem_tails.tex $dx_sustain}
+            {if_else $dx_gem_rgb
+               {dx_custom_texture_setter rgb sustains gem_tails.tex $dx_sustain}
+               {dx_custom_texture_setter FALSE sustains gem_tails.tex $dx_sustain}
+            }
          }
 
          {if $dx_lanes_needs_reset
