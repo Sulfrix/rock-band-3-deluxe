@@ -515,3 +515,18 @@
       }
    }
 }
+
+{func dx_track_initialize_rgb ($trackdir)
+   {set_this $trackdir}
+   
+}
+
+{func dx_track_enable_rgb_gems ($trackdir)
+   {set_this $trackdir}
+   {if_else {exists rgb_handler}
+      {do}
+      {do
+
+      }
+   }
+}
