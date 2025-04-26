@@ -270,8 +270,8 @@
                   {{$trackdir find rgb_handler} set_slot_color 1 {pack_color 0 1 1}}
                   {{$trackdir find rgb_handler} set_slot_color 2 {pack_color 1 1 1}}
                   {{$trackdir find rgb_handler} set_slot_color 3 {pack_color 0.75 1 0.5}}
-                  {{$trackdir find rgb_handler} set_slot_color 4 {pack_color 0.25 0.25 0.25}}
-                  {{$trackdir find rgb_handler} set_slot_color 5 {pack_color 1 0.5 1}}
+                  {{$trackdir find rgb_handler} set_slot_color 4 {pack_color 1 0.5 1}}
+                  {{$trackdir find rgb_handler} set_slot_color 5 {pack_color 0.25 0.25 0.25}}
                }
             }
             {dx_custom_texture_setter gems gems_emissive_dynamic prism_gem_emissive_dynamic.tex $dx_gem}

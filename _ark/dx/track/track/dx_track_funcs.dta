@@ -542,6 +542,7 @@
       {new Mat $matname}
       {dx_log_writer insane {sprint "About to copy some values"}}
       {$matname copy {if_else $ishopo prism_mat_hopo.mat prism_mat.mat} kCopyShallow}
+      {$matname set alpha_cut TRUE}
       ;{$matname set next_pass {if_else $ishopo rgb_prism_bracket_hopo.mat rgb_prism_bracket.mat}}
       ;{$matname set z_mode kZ}
       ;{dx_log_writer insane {sprint "next pass -> " {{$matname get next_pass} name}}}
@@ -596,20 +597,23 @@
 ))
 
 {func dx_trackwidget_rgb ($wid $mat $name)
-   {set $bracketmesh {symbol {sprint "rgb_prism_bracket_" $name ".mesh"}}}
+   {set $bracketmesh {if_else {startswith $name "hopo"} rgb_prism_bracket_hopo.mesh rgb_prism_bracket.mesh}}
    {unless {exists $bracketmesh}
-      ;{new Mesh $bracketmesh}
-      ;{$bracketmesh copy {$wid get (meshes 0)} kCopyShallow}
-      ;{$bracketmesh set mat {if_else {startswith $name "hopo"} rgb_prism_bracket_hopo.mat rgb_prism_bracket.mat}}
-      ;{gem_pieces.grp add_object $bracketmesh}
+      {new Mesh $bracketmesh}
+      {$bracketmesh copy {$wid get (meshes 0)} kCopyShallow}
+      {$bracketmesh set mat {if_else {startswith $name "hopo"} rgb_prism_bracket_hopo.mat rgb_prism_bracket.mat}}
+      {gem_pieces.grp add_object $bracketmesh}
       ;{dx_log_writer insane {sprint "bracket mesh mat: " {$bracketmesh get mat}}}
-      {{$wid get (meshes 0)} set mat $mat}
-      ;{$wid remove (meshes 0)}
-      ;{$wid insert (meshes 0) $bracketmesh}
       ;{$wid set max_meshes {+ 1 {$wid get max_meshes}}}
    }
+   {set $meshes {array ()}}
+   ;{set $meshes {$wid get_array meshes}}
+   ;{{elem $meshes 0} set mat $mat}
+   ;{push_back $meshes {$this find $bracketmesh}}
+   ;{$wid set_meshes}
    ;{$wid set mat rgb_prism_bracket.mat}
    ;{$wid set mat ""}
+   {$wid clear meshes}
    {dx_log_writer insane {sprint {$wid get_array meshes}}}
 }
 
@@ -620,8 +624,8 @@
    }
    {foreach $mapping DX_WIDGET_MAPPINGS
       {dx_log_writer insane {sprint "Setting material for track widget " $mapping}}
-      {dx_trackwidget_set_mat {elem $mapping 0} rgb_prism_bracket.mat {elem $mapping 1}}
-      ;{dx_trackwidget_rgb {elem $mapping 0} {symbol {sprint "rgb_prism_fill_" {elem $mapping 1} ".mat"}} {elem $mapping 1}}
+      ;{dx_trackwidget_set_mat {elem $mapping 0} rgb_prism_bracket.mat {elem $mapping 1}}
+      {dx_trackwidget_rgb {elem $mapping 0} {symbol {sprint "rgb_prism_fill_" {elem $mapping 1} ".mat"}} {elem $mapping 1}}
    }
 }
 
