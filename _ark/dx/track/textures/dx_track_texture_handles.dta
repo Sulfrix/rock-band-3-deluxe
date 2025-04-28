@@ -229,7 +229,11 @@
             #endif
             {dx_custom_texture_setter gems gems_emissive prism_gem_emissive.tex $dx_gem}
             {set $iwanttologstuff TRUE}
-            {if $dx_gem_rgb
+            {if TRUE
+
+               {new Mat prism_mat_hopo.mat}
+               {prism_mat_hopo.mat copy prism_mat.mat kCopyShallow}
+
                ; if you have a better way of finding track_shared lmk, not sure if it's just in global scope
                {set $track_shared {square_smasher_bright.tex dir}}
 

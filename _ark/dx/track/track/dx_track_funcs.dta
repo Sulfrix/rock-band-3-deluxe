@@ -526,12 +526,14 @@
    {rgb_prism_bracket.mat set diffuse_tex rgb_gem_brackets.tex}
    {rgb_prism_bracket.mat set emissive_map rgb_gem_brackets_emissive.tex}
    {rgb_prism_bracket.mat set z_mode kZModeTransparent}
+   {rgb_prism_bracket.mat set alpha_cut TRUE}
 
    {new Mat rgb_prism_bracket_hopo.mat}
    {rgb_prism_bracket_hopo.mat copy prism_mat_hopo.mat kCopyShallow}
    {rgb_prism_bracket_hopo.mat set diffuse_tex rgb_gem_brackets_hopo.tex}
    {rgb_prism_bracket_hopo.mat set emissive_map rgb_gem_brackets_emissive_hopo.tex}
    {rgb_prism_bracket_hopo.mat set z_mode kZModeTransparent}
+   {rgb_prism_bracket_hopo.mat set alpha_cut TRUE}
 
    {dx_log_writer insane "Created materials"}
 
@@ -597,7 +599,7 @@
 ))
 
 {func dx_trackwidget_rgb ($wid $mat $name)
-   {set $bracketmesh {if_else {startswith $name "hopo"} rgb_prism_bracket_hopo.mesh rgb_prism_bracket.mesh}}
+   {set $bracketmesh {symbol {sprint "rgb_prism_bracket_" $name ".mesh"}}}
    {unless {exists $bracketmesh}
       {new Mesh $bracketmesh}
       {$bracketmesh copy {$wid get (meshes 0)} kCopyShallow}
@@ -606,14 +608,16 @@
       ;{dx_log_writer insane {sprint "bracket mesh mat: " {$bracketmesh get mat}}}
       ;{$wid set max_meshes {+ 1 {$wid get max_meshes}}}
    }
-   {set $meshes {array ()}}
    ;{set $meshes {$wid get_array meshes}}
-   ;{{elem $meshes 0} set mat $mat}
+   ;{{$wid get (meshes 0)} set mat {if_else {startswith $name "hopo"} rgb_prism_bracket_hopo.mat rgb_prism_bracket.mat}}
+   {{$wid get (meshes 0)} set mat $mat}
+   {$wid insert (meshes {$wid size (meshes)}) $bracketmesh}
    ;{push_back $meshes {$this find $bracketmesh}}
    ;{$wid set_meshes}
    ;{$wid set mat rgb_prism_bracket.mat}
    ;{$wid set mat ""}
-   {$wid clear meshes}
+   ;{$wid set widget_type kImmediateWidget}
+   {$wid set allow_rotation TRUE}
    {dx_log_writer insane {sprint {$wid get_array meshes}}}
 }
 
