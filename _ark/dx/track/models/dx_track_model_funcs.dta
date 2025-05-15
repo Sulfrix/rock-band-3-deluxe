@@ -134,6 +134,32 @@
    #endif
 }
 
+{func dx_unload_model_themes
+   ($trackpanel)
+   {set $iwanttologstuff TRUE}
+   {dx_log_writer insane {sprint "Unloading all model themes"}}
+   {$trackpanel iterate
+      GemTrackDir
+      $dir
+      {if {$dir has (loaded_model_theme)}
+         {dx_uninstall_gem_theme $dir}
+         {dx_remove_subdir_path $dir {$dir get loaded_model_theme}}
+         {$dir set loaded_model_theme kDataUnhandled}
+      }
+   }
+   {foreach $loaded $dx_loaded_gem_themes
+      {$trackpanel iterate Object $obj
+         {if {== {$obj name} dir_locator}
+            {if {== {{$obj dir} get_path_name} $loaded}
+               {{$obj dir} delete_loader}
+            }
+         }
+      }
+      {dx_remove_subdir_path {$trackpanel loaded_dir} $loaded}
+      {remove_elem $dx_loaded_gem_themes $loaded}
+   }
+}
+
 {func dx_update_model_themes
    ($trackpanel)
    ;{set $iwanttologstuff TRUE}
