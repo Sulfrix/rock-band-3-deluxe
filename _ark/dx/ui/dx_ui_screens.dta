@@ -47,6 +47,33 @@
    dx_welcome_screen
    (panels dx_welcome_panel)
    (focus dx_welcome_panel)}
+{new UIPanel dx_onboarding_panel
+   (enter
+      {if {! {exists onboarding_panel}}
+         {new PanelDir onboarding_panel}
+         {$this set_loaded_dir onboarding_panel}
+         {set_this onboarding_panel}
+         {$this set cam '[ui.cam]'}
+         {$this set use_specified_cam TRUE}
+         {new Group all.grp}
+         {$this sync_objects}
+         {new BandLabel welcome.lbl}
+         {welcome.lbl set resource_name pentatonic_outline}
+         {welcome.lbl set text_size 60}
+         {welcome.lbl set fit_type kFitJust}
+         {welcome.lbl set alignment kTopLeft}
+         {welcome.lbl set width 600}
+         {welcome.lbl set height 50}
+         {welcome.lbl set_token_fmt "Welcome to Rock Band 3 Deluxe!"}
+         {welcome.lbl set_local_pos -380 0 210}
+         {all.grp add_object welcome.lbl}
+      }
+   )
+}
+{new BandScreen dx_onboarding_screen
+   (panels meta sv8_panel dx_onboarding_panel)
+   (focus dx_onboarding_panel)
+}
 {new
    UIPanel
    dx_settings_error_panel
