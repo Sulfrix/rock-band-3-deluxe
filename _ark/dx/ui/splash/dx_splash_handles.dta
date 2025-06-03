@@ -204,74 +204,7 @@
       ;{dx_splashtext.btn set_local_scale 0.75}
       {dx_splashtext.btn set_local_rot 35 12.5 -25} ; dx - set the position of the splash text
       {set $dx_splash_default_size {dx_splashtext.btn get_local_scale_index 1}}
-      {set $offset 4.0}
-      {set $offset_x 1.0}
-      {thread_task kTaskSeconds
-         (name animate_splash)
-         (script
-            {dx_splashtext.btn set_local_pos_index 1 {+ {dx_splashtext.btn get_local_pos_index 1} $offset}}
-            {dx_splashtext.btn set_local_pos_index 0 {- {dx_splashtext.btn get_local_pos_index 0} $offset_x}}
-            {$task sleep 0.06}
-            {dx_splashtext.btn set_local_pos_index 1 {+ {dx_splashtext.btn get_local_pos_index 1} $offset}}
-            {dx_splashtext.btn set_local_pos_index 0 {- {dx_splashtext.btn get_local_pos_index 0} $offset_x}}
-            {$task sleep 0.05}
-            {dx_splashtext.btn set_local_pos_index 1 {+ {dx_splashtext.btn get_local_pos_index 1} $offset}}
-            {dx_splashtext.btn set_local_pos_index 0 {- {dx_splashtext.btn get_local_pos_index 0} $offset_x}}
-            {$task sleep 0.04}
-            {dx_splashtext.btn set_local_pos_index 1 {+ {dx_splashtext.btn get_local_pos_index 1} $offset}}
-            {dx_splashtext.btn set_local_pos_index 0 {- {dx_splashtext.btn get_local_pos_index 0} $offset_x}}
-            {$task sleep 0.03}
-            {dx_splashtext.btn set_local_pos_index 1 {+ {dx_splashtext.btn get_local_pos_index 1} $offset}}
-            {dx_splashtext.btn set_local_pos_index 0 {- {dx_splashtext.btn get_local_pos_index 0} $offset_x}}
-            {$task sleep 0.03}
-            {dx_splashtext.btn set_local_pos_index 1 {+ {dx_splashtext.btn get_local_pos_index 1} $offset}}
-            {dx_splashtext.btn set_local_pos_index 0 {- {dx_splashtext.btn get_local_pos_index 0} $offset_x}}
-            {$task sleep 0.03}
-            {dx_splashtext.btn set_local_pos_index 1 {+ {dx_splashtext.btn get_local_pos_index 1} $offset}}
-            {dx_splashtext.btn set_local_pos_index 0 {- {dx_splashtext.btn get_local_pos_index 0} $offset_x}}
-            {$task sleep 0.03}
-            {dx_splashtext.btn set_local_pos_index 1 {+ {dx_splashtext.btn get_local_pos_index 1} $offset}}
-            {dx_splashtext.btn set_local_pos_index 0 {- {dx_splashtext.btn get_local_pos_index 0} $offset_x}}
-            {$task sleep 0.04}
-            {dx_splashtext.btn set_local_pos_index 1 {+ {dx_splashtext.btn get_local_pos_index 1} $offset}}
-            {dx_splashtext.btn set_local_pos_index 0 {- {dx_splashtext.btn get_local_pos_index 0} $offset_x}}
-            {$task sleep 0.05}
-            {dx_splashtext.btn set_local_pos_index 1 {+ {dx_splashtext.btn get_local_pos_index 1} $offset}}
-            {dx_splashtext.btn set_local_pos_index 0 {- {dx_splashtext.btn get_local_pos_index 0} $offset_x}}
-            {$task sleep 0.05}
-            {dx_splashtext.btn set_local_pos_index 1 {- {dx_splashtext.btn get_local_pos_index 1} $offset}}
-            {dx_splashtext.btn set_local_pos_index 0 {+ {dx_splashtext.btn get_local_pos_index 0} $offset_x}}
-            {$task sleep 0.04}
-            {dx_splashtext.btn set_local_pos_index 1 {- {dx_splashtext.btn get_local_pos_index 1} $offset}}
-            {dx_splashtext.btn set_local_pos_index 0 {+ {dx_splashtext.btn get_local_pos_index 0} $offset_x}}
-            {$task sleep 0.03}
-            {dx_splashtext.btn set_local_pos_index 1 {- {dx_splashtext.btn get_local_pos_index 1} $offset}}
-            {dx_splashtext.btn set_local_pos_index 0 {+ {dx_splashtext.btn get_local_pos_index 0} $offset_x}}
-            {$task sleep 0.03}
-            {dx_splashtext.btn set_local_pos_index 1 {- {dx_splashtext.btn get_local_pos_index 1} $offset}}
-            {dx_splashtext.btn set_local_pos_index 0 {+ {dx_splashtext.btn get_local_pos_index 0} $offset_x}}
-            {$task sleep 0.03}
-            {dx_splashtext.btn set_local_pos_index 1 {- {dx_splashtext.btn get_local_pos_index 1} $offset}}
-            {dx_splashtext.btn set_local_pos_index 0 {+ {dx_splashtext.btn get_local_pos_index 0} $offset_x}}
-            {$task sleep 0.03}
-            {dx_splashtext.btn set_local_pos_index 1 {- {dx_splashtext.btn get_local_pos_index 1} $offset}}
-            {dx_splashtext.btn set_local_pos_index 0 {+ {dx_splashtext.btn get_local_pos_index 0} $offset_x}}
-            {$task sleep 0.03}
-            {dx_splashtext.btn set_local_pos_index 1 {- {dx_splashtext.btn get_local_pos_index 1} $offset}}
-            {dx_splashtext.btn set_local_pos_index 0 {+ {dx_splashtext.btn get_local_pos_index 0} $offset_x}}
-            {$task sleep 0.03}
-            {dx_splashtext.btn set_local_pos_index 1 {- {dx_splashtext.btn get_local_pos_index 1} $offset}}
-            {dx_splashtext.btn set_local_pos_index 0 {+ {dx_splashtext.btn get_local_pos_index 0} $offset_x}}
-            {$task sleep 0.04}
-            {dx_splashtext.btn set_local_pos_index 1 {- {dx_splashtext.btn get_local_pos_index 1} $offset}}
-            {dx_splashtext.btn set_local_pos_index 0 {+ {dx_splashtext.btn get_local_pos_index 0} $offset_x}}
-            {$task sleep 0.05}
-            {dx_splashtext.btn set_local_pos_index 1 {- {dx_splashtext.btn get_local_pos_index 1} $offset}}
-            {dx_splashtext.btn set_local_pos_index 0 {+ {dx_splashtext.btn get_local_pos_index 0} $offset_x}}
-            {$task sleep 0.01}
-            {$task loop}
-         )
-      }
+      {dx_splashtext.anim animate (loop 0 30) (units kTaskUISeconds) (period 0.55)}
 )
 
 #define DX_NEW_SPLASH_OBJ
@@ -292,6 +225,14 @@
    {dx_splashtext.btn set alpha 1}
    {dx_splashtext.btn set color_override custom.color}
    {text.grp add_object dx_splashtext.btn}
+   {new PropAnim dx_splashtext.anim}
+   
+   {dx_splashtext.anim add_keys dx_splashtext.btn (position) kPropVector3}
+   {dx_splashtext.anim set rate kTaskUISeconds}
+   {dx_splashtext.anim set_key_val dx_splashtext.btn (position) 0  (200.5    20 140)}
+   {dx_splashtext.anim set_key_val dx_splashtext.btn (position) 15 (200.5  0  140)}
+   {dx_splashtext.anim set_key_val dx_splashtext.btn (position) 30 (200.5    20 140)}
+   {dx_splashtext.anim set_interp_type dx_splashtext.btn (position) kPropSpline}
 
 )
 #define DX_INTERNAL_SPLASH_TEXT ;this handles the beta splash easter egg
