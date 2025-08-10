@@ -14,6 +14,20 @@
       world.pp
    )
 )
+(Object
+   (types
+      (input_listen
+         (BUTTON_DOWN_MSG
+            {joypad_listener button_down $user $raw_button $action $pad_num}
+            kDataUnhandled
+         )
+         (BUTTON_UP_MSG
+            {joypad_listener button_up $user $raw_button $action $pad_num}
+            kDataUnhandled
+         )
+      )
+   )
+)
 (BandLabel
    (description "Label with color presets")
    (allowed_dirs PanelDir)

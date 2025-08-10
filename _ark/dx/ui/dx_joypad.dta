@@ -1,0 +1,13 @@
+{new Object joypad_listener
+    (BUTTON_DOWN_MSG
+        {set $iwanttologstuff TRUE}
+        {dx_log_writer insane {sprint "down " {array ($user $raw_button $action $pad_num)}}}
+    )
+    (BUTTON_UP_MSG
+        {set $iwanttologstuff TRUE}
+        {dx_log_writer insane {sprint "up " {array ($user $raw_button $action $pad_num)}}}
+    )
+}
+
+{ui set_type input_listen}
+;{platform_mgr add_sink joypad_listener}
