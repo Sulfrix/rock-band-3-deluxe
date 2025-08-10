@@ -139,6 +139,18 @@
    ;   }
    ;}
 }
+{func dx_gem_colorizer ($gemtex)
+   {if {! {$this has gems_colorized}}
+      {$this set gems_colorized FALSE}
+   }
+   {unless [gems_colorized]
+      ; Create the fill materials
+      {foreach $newmat (green red yellow blue orange)}
+   }
+}
+{func dx_gem_decolorizer
+   ; TODO
+}
 {func
    color_me_milo_lite
    {dx_log_writer info {sprint "color_me_milo_lite"}}
