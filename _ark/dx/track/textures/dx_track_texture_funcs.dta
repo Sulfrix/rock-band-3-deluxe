@@ -140,13 +140,53 @@
    ;}
 }
 {func dx_gem_colorizer ($gemtex)
-   {if {! {$this has gems_colorized}}
-      {$this set gems_colorized FALSE}
+   {with {prism_gems.tex dir} ; Spawn these in track_shared
+      {unless {$this exists prism_fill.tex}
+         {new Tex prism_fill.tex}
+         {new Tex prism_fill_hopo.tex}
+         {new Tex prism_fill_emissive.tex}
+         {new Tex prism_fill_hopo_emissive.tex}
+      }
    }
-   {unless [gems_colorized]
-      ; Create the fill materials
-      {foreach $newmat (green red yellow blue orange)}
+   {beatmatch foreach_active_player $player
+      {with {$this find {sprint "track_" {{$player get_user} get_slot_num}}}
+         {dx_log_writer insane {sprint "Checking property on " $this}}
+         {if {! {$this has (gems_colorized)}}
+            {$this set gems_colorized FALSE}
+         }
+         {dx_log_writer insane {sprint "Time to colorize gems"}}
+         {unless [gems_colorized]
+            {dx_log_writer insane {sprint "Spawned fill textures"}}
+            ; Create the fill materials
+            {foreach $gem (stepped_green stepped_red stepped_yellow stepped_blue stepped_orange hopo_green hopo_red hopo_yellow hopo_blue hopo_orange)
+               {do
+                  ($matname {sprint "gem_fill_" $gem ".mat"})
+                  ($meshname {sprint "prism_gem_" $gem ".mesh"})
+                  ($ishopo {startswith $gem "hopo"})
+                  {dx_log_writer insane {sprint "Creating material " $matname " for mesh " $meshname " | mesh exists?: " {exists $meshname}}}
+                  {dx_log_writer insane {sprint "prism_fill.tex exists?: " {exists prism_fill.tex}}}
+                  {new Mat $matname}
+                  {$matname copy prism_mat.mat kCopyShallow}
+                  {$matname set blend kBlendSrc}
+                  {$matname set diffuse_tex {if_else $ishopo prism_fill_hopo.tex prism_fill.tex}}
+                  {$matname set emissive_map {if_else $ishopo prism_fill_hopo_emissive.tex prism_fill_emissive.tex}}
+                  {$matname set next_pass {if_else $ishopo prism_mat.mat prism_mat_hopo.mat}}
+                  {dx_log_writer insane {sprint "Diffuse: " {$matname get diffuse_tex}}}
+                  {$meshname set mat $matname}
+               }
+            }
+         }
+      }
    }
+   {dx_log_writer insane {sprint "Setting bitmaps"}}
+   {prism_fill.tex set_bitmap {sprint "dx/custom_textures/rgb/gems/default/fills/" $gemtex ".png"}}
+   {prism_fill_hopo.tex set_bitmap {sprint "dx/custom_textures/rgb/gems/hopo/fills/" $gemtex ".png"}}
+   {prism_fill_emissive.tex set_bitmap {sprint "dx/custom_textures/rgb/gems/emissive/fills/" $gemtex ".png"}}
+   {prism_fill_hopo_emissive.tex set_bitmap {sprint "dx/custom_textures/rgb/gems/emissive_hopo/fills/" $gemtex ".png"}}
+   {prism_gems.tex set_bitmap {sprint "dx/custom_textures/rgb/gems/default/brackets/" $gemtex ".png"}}
+   {prism_gems_hopo.tex set_bitmap {sprint "dx/custom_textures/rgb/gems/hopo/brackets/" $gemtex ".png"}}
+   {prism_gem_emissive.tex set_bitmap {sprint "dx/custom_textures/rgb/gems/emissive/brackets/" $gemtex ".png"}}
+   {prism_gem_emissive_hopo.tex set_bitmap {sprint "dx/custom_textures/rgb/gems/emissive_hopo/brackets/" $gemtex ".png"}}
 }
 {func dx_gem_decolorizer
    ; TODO

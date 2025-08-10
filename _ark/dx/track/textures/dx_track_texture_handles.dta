@@ -50,6 +50,7 @@
             {dx_custom_texture_setter multiplier_ring multiplier_ring_meter multiplier_meter.tex auto_play}
             {set $dx_multiplier_ring_needs_reset TRUE}
          }
+         {set $iwanttologstuff TRUE}
          {if $dx_gem_needs_reset ;check if a new texture is queued
             {if_else {has_substr $dx_gem "(rgb)"}
                {dx_gem_colorizer $dx_gem}
