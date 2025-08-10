@@ -1,11 +1,63 @@
 {new Object joypad_listener
     (BUTTON_DOWN_MSG
-        {set $iwanttologstuff TRUE}
-        {dx_log_writer insane {sprint "down " {array ($user $raw_button $action $pad_num)}}}
+        {if $inputdisp_created
+            {set $iwanttologstuff TRUE}
+            {dx_log_writer insane {sprint "down " {array ($user $raw_button $action $pad_num)}}}
+            {with overshell
+                {with {$this find {sprint slot {{$this get_slot $user} get_slot_num}}}
+                    {do
+                        ($color {switch $action
+                            (kAction_Confirm green)
+                            (kAction_Cancel red)
+                            (kAction_Option yellow)
+                            (kAction_ShellOption blue)
+                            (kAction_PageDown orange)
+                            none
+                        })
+                        ($mat {sprint inputdisp_ $color '.mat'})
+                        {if {!= $color none}
+                            {$mat set color {switch $color
+                                (green {pack_color 0 1 0})
+                                (red {pack_color 1 0 0 1})
+                                (yellow {pack_color 1 1 0 1})
+                                (blue {pack_color 0 0 1 1})
+                                (orange {pack_color 1 0.5 0.2 1})
+                            }}
+                        }
+                    }
+                }
+            }
+        }
     )
     (BUTTON_UP_MSG
-        {set $iwanttologstuff TRUE}
-        {dx_log_writer insane {sprint "up " {array ($user $raw_button $action $pad_num)}}}
+        {if $inputdisp_created
+            {set $iwanttologstuff TRUE}
+            {dx_log_writer insane {sprint "up " {array ($user $raw_button $action $pad_num)}}}
+            {with overshell
+                {with {$this find {sprint slot {{$this get_slot $user} get_slot_num}}}
+                    {do
+                        ($color {switch $action
+                            (kAction_Confirm green)
+                            (kAction_Cancel red)
+                            (kAction_Option yellow)
+                            (kAction_ShellOption blue)
+                            (kAction_PageDown orange)
+                            none
+                        })
+                        ($mat {sprint inputdisp_ $color '.mat'})
+                        {if {!= $color none}
+                            {$mat set color {switch $color
+                                (green {pack_color 0 0.5 0})
+                                (red {pack_color 0.5 0 0})
+                                (yellow {pack_color 0.5 0.5 0})
+                                (blue {pack_color 0 0 0.5})
+                                (orange {pack_color 0.5 0.25 0.1 1})
+                            }}
+                        }
+                    }
+                }
+            }
+        }
     )
 }
 
