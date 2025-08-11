@@ -63,3 +63,13 @@
 
 {ui set_type input_listen}
 ;{platform_mgr add_sink joypad_listener}
+
+{func dx_create_os_input_display ($os_slot)
+    {with $os_slot
+        {do
+            ($objdir {new ObjectDir inputdisplay
+                
+            })
+        }
+    }
+}
