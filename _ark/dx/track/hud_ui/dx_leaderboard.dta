@@ -1,0 +1,30 @@
+; Global var so this can be set from the loading screen without issue
+{set $dx_leaderboard_data {read_file "GD:/dev_hdd0/game/BLUS30463/USRDIR/dx_test_leaderboard.dta"}}
+{write_file "GD:/dev_hdd0/game/BLUS30463/USRDIR/dx_test_leaderboard_out.dta" $dx_leaderboard_data}
+
+{func dx_create_leaderboard
+    {with 
+        {new RndDir dx_leaderboard
+
+        }
+
+        {new Group slots.grp}
+        {slots.grp set_trans_parent $this}
+        {$this sync_objects}
+
+        {new Tex plain.tex}
+        {plain.tex set_bitmap "dx/custom_textures/_additional_textures/generic_white_box.png"}
+        {new Mat slotbg.mat}
+        {slotbg.mat set diffuse_tex plain.tex}
+        {slotbg.mat set color {pack_color 0 0 0}}
+        {slotbg.mat set alpha 0.5}
+
+        {new Mesh slot_bg.mesh}
+        {dx_generate_quad_mesh slot_bg.mesh 4 1}
+
+        {$this set_trans_parent draw_order.grp}
+        {draw_order.grp add_object $this}
+        ;{dx_passive_messenger_symbol "hi hello"}
+        {$this set_local_pos -18 33 0}
+    }
+}

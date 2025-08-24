@@ -5,6 +5,7 @@
 ;#define DX_PTBR (1)
 #define CUSTOMSOURCE (1) ;we can use custom sources
 #define RB3DX (1) ;for external things checking for dx (GoCentral)
+#define RB3DX_DEV (1)
 ; #define KEYS_ENABLED (1); toggle this for legacy key upgrades
 ; #define KEYS_BUILD (1) ;when custom keys moggs are enabled inside the ark
 ;#define STORE_ENABLED (1) ;show music store on main menu

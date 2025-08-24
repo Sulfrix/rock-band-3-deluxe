@@ -101,6 +101,9 @@
             {dx_create_lyric_display}
             {draw_order.grp add_object lyric_display}
          }
+         {if {! {$this exists dx_leaderboard}}
+            {dx_create_leaderboard}
+         }
          {dx_set_scoreboard_pos}
          ;{dx_set_star_display_pos}
          {$this dx_force_remote_vox}
