@@ -45,4 +45,5 @@
    (mod_fakejuke) ; jukebox mode recreation
    (mod_karaoke) ; karaoke
    (mod_auto_play) ; bot
+   (mod_drumtar delayed_effect)
 )

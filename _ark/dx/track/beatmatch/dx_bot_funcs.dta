@@ -107,6 +107,7 @@
          {modifier_mgr is_modifier_active mod_fakejuke}
          {modifier_mgr is_modifier_active mod_karaoke}
          {modifier_mgr is_modifier_active mod_auto_play}
+         {modifier_mgr is_modifier_active mod_drumtar}
       }
       {if {>= {beatmatch num_active_players} 1}
          {beatmatch set_invalid_score 0}

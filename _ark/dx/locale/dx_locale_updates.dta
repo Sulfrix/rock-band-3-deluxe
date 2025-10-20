@@ -239,6 +239,8 @@
 
 ; Custom Modifiers
 (enable_popup_help_desc "Shows pop-ups in-game to assist newer players\nex: Reminding Drummers to use the kick pedal")
+(mod_drumtar "Drums On Guitar")
+(mod_drumtar_dsec "Swaps the Guitar chart for the Drums chart.")
 (mod_air_guitar "Air Instruments")
 (mod_air_guitar_desc "Who needs a real guitar anyway?")
 (mod_auto_kick "Auto Kick")
