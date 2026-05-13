@@ -360,7 +360,7 @@
       {$this set_results}
       {$this dx_endgame_enter}
       {overshell set_use_extended_mic_arrows TRUE}
-      {set $dx_restart_allowed TRUE}
+      {set $dx_restart_allowed FALSE}
       {if {&& {gamemode get loop_setlist} {meta_performer is_set_complete}}
          {meta_performer restart}
       }
