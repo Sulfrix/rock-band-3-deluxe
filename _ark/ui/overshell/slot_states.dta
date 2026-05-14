@@ -2753,6 +2753,7 @@
          {choose_part.lst refresh}
       }
       DX_UPDATE_ICON
+      {dx_handle_part_select_pic enter {$this get_slot_num}}
    )
    (poll DX_UPDATE_ICON)
    (SELECT_MSG
@@ -3032,7 +3033,10 @@
          }
       }
    )
-   (SCROLL_MSG {$this update})
+   (SCROLL_MSG
+      {$this update}
+      {dx_handle_part_select_pic scroll {$this get_slot_num}}
+   )
    (get_focus_is_harmony
       {if_else {$this focus_name}
          {if_else {== {{$this focus_name} selected_sym} overshell_vocal_harmony}
@@ -3087,6 +3091,9 @@
          }
          {$this leave_choose_part}
       }
+   )
+   (exit
+      {dx_handle_part_select_pic exit {$this get_slot_num}}
    )
 )
 (kState_ConfirmPlayaShowExit
